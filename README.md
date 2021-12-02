@@ -9,3 +9,4 @@
 # Inhalte
 
 - [Tools und IDEs, die ich nutze](./ides-tools/README.md)
+- [Teile meines Bash Profiles](./bash-profile/README.md)
