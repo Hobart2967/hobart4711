@@ -4,6 +4,7 @@
 - [Bash completions](#bash-completions)
 - [Bash styling](#bash-styling)
 - [NPM Aliases](#npm-aliases)
+- [NVM](#nvm)
 - [Linux Utils](#linux-utils)
 - [MacOS Utilities](#macos-utilities)
 - [CircleCI](#circleci)
@@ -108,6 +109,64 @@ export PS1='\[\033[0;32m\][\t] \[\033[0m\033[0;32m\]\e[0;36m\e[0;33m\u\[\033[0;3
 # Zeigt die aktuelle NPM-Paket Version des CWD an.
 # Erfordert NPM und JQ
 alias package-version='npm info $(cat package.json | jq -r ".name") && echo "Local version "+$(cat package.json | jq -r ".version") '
+```
+
+## NVM
+```sh
+# NVM Autoswitcher
+find-up () {
+    path=$(pwd)
+    while [[ "$path" != "" && ! -e "$path/$1" ]]; do
+        path=${path%/*}
+    done
+    echo "$path"
+}
+
+cdnvm(){
+    cd "$@";
+    nvm_path=$(find-up .nvmrc | tr -d '[:space:]')
+
+    # If there are no .nvmrc file, use the default nvm version
+    if [[ ! $nvm_path = *[^[:space:]]* ]]; then
+
+        declare default_version;
+        default_version=$(nvm version default);
+
+        # If there is no default version, set it to `node`
+        # This will use the latest version on your machine
+        if [[ $default_version == "N/A" ]]; then
+            nvm alias default node;
+            default_version=$(nvm version default);
+        fi
+
+        # If the current version is not the default version, set it to use the default version
+        if [[ $(nvm current) != "$default_version" ]]; then
+            echo "No .nvmrc found, changing node version to default";
+            nvm use default;
+        fi
+
+        elif [[ -s $nvm_path/.nvmrc && -r $nvm_path/.nvmrc ]]; then
+        declare nvm_version
+        nvm_version=$(<"$nvm_path"/.nvmrc)
+
+        # Add the `v` suffix if it does not exists in the .nvmrc file
+        if [[ $nvm_version != v* ]]; then
+            nvm_version="v""$nvm_version"
+        fi
+
+        # If it is not already installed, install it
+        if [[ $(nvm ls "$nvm_version" | tr -d '[:space:]') == "N/A" ]]; then
+            echo "Installing node version $nvm_version";
+            nvm install "$nvm_version";
+        fi
+
+        if [[ $(nvm current) != "$nvm_version" ]]; then
+            echo "Found .nvmrc, Changing node version to $nvm_version";
+            nvm use "$nvm_version";
+        fi
+    fi
+}
+alias cd='cdnvm'
 ```
 
 ## Linux Utils
