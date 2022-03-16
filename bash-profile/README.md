@@ -2,6 +2,7 @@
 
 - [Aufbau](#aufbau)
 - [Bash completions](#bash-completions)
+- [AWS](#aws)
 - [Bash styling](#bash-styling)
 - [NPM Aliases](#npm-aliases)
 - [NVM](#nvm)
@@ -85,6 +86,19 @@ Bash completions, die ich i.d.R. nutze:
   }
   complete -F _awsume awsume
   ```
+  
+## AWS
+
+```
+# Echo'ed das aktuell verwendete AWS-Profil
+get-aws-login() {
+  if [ -z "$AWSUME_PROFILE" ]; then
+    echo "No AWS login"
+  else
+    echo $AWSUME_PROFILE
+  fi
+}
+```
 
 ## Bash styling
 
