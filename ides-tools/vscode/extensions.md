@@ -3,6 +3,7 @@
 ## Extension "Bucket List"
 - https://github.com/mtbaqer/vscode-better-folding
 
+## ToC
 
 - [Allgemein](#allgemein)
   - [:rotating_light: Error Lens](#rotating_light-error-lens)
