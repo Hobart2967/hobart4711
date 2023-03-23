@@ -1,4 +1,9 @@
 # Visual Studio Code
+
+## Extension "Bucket List"
+- https://github.com/mtbaqer/vscode-better-folding
+
+
 - [Allgemein](#allgemein)
   - [:rotating_light: Error Lens](#rotating_light-error-lens)
   - [:lipstick: Live Server](#lipstick-live-server)
